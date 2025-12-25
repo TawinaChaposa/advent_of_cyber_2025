@@ -1,1 +1,49 @@
+# Day 01 – Linux CLI
 
+## Objective
+Day ones objective was to Learn the basics of the Linux command-line interface (CLI) and use it to navigate the file system and investigate a security scenario.
+
+## Key Concepts
+- The CLI allows interaction with the system using commands.
+- Many security and IT tasks rely on the CLI rather than a GUI.
+- Hidden files start with a dot (`.`) and may contain important data.
+
+## Steps Taken
+
+### Exploring the Home Directory
+- `ls` – List visible files and directories
+- `ls -la` – List all files including hidden ones
+- `cd Guides` – Move into the Guides directory
+- `cat .guide.txt` – Read the hidden security guide
+
+### Investigating Logs
+- `cd /var/log` – Navigate to system logs
+- `grep "Failed password" auth.log` – Search for failed login attempts
+
+### Finding Suspicious Files
+- `find /home/socmas -name *egg*` – the key was the keyword "find" which is a command that searches for files with specific parameters
+
+### Analyzing Scripts
+- `cat eggstrike.sh` – Examine the malicious script
+- Observed usage of pipes (`|`), output redirection (`>`), and conditional execution (`&&`)
+[**Pipe (`|`)**  Sends the output of one command as input to another.  
+  *Example:* `cat unordered-list.txt | sort | uniq`
+- **Output Redirection (`>` / `>>`)**  
+  - `>` overwrites the contents of a file  
+  - `>>` appends output to the end of a file  
+  *Example:* `some-long-command > /home/mcskidy/output.txt`
+
+- **Double Ampersand (`&&`)** Executes the second command only if the first command succeeds.  
+  *Example:* `grep "secret" message.txt && echo "Secret found!"`]
+
+### User Permissions
+- `whoami` – to Check current user
+- `sudo su` – to Switch to root for elevated privileges
+- `cat /etc/shadow` – (Requires root) Access user password hashes
+- `history` – Review command history for traces of malicious activity
+
+## Key Learnings
+- Hidden files and log files are valuable sources of information.
+- Pipes, redirection, and scripting allow automation and manipulation of data.
+- Root access is powerful but requires careful handling.
+- Bash history can reveal evidence of past system activity.
