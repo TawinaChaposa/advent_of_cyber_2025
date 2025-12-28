@@ -1,49 +1,92 @@
-# Day 01 – Linux CLI
+#Day 1: Linux CLI Investigation – Uncovering the First Clues
+##Scenario Overview
 
-## Objective
-Day ones objective was to Learn the basics of the Linux command-line interface (CLI) and use it to navigate the file system and investigate a security scenario.
+The unthinkable has happened — McSkidy has been kidnapped. Without her leadership, Wareville’s cyber defenses are weakening, and Christmas itself is under threat.
 
-## Key Concepts
-- The CLI allows interaction with the system using commands.
-- Many security and IT tasks rely on the CLI rather than a GUI.
-- Hidden files start with a dot (`.`) and may contain important data.
+As a cybersecurity analyst supporting The Best Festival Company (TBFC), my first task was to investigate tbfc-web01, a Linux server responsible for processing Christmas wishlists. McSkidy’s final actions may hold critical clues about who attacked the system and what their intentions were.
 
-## Steps Taken
+With no graphical interface available, the investigation had to be carried out entirely using the Linux Command-Line Interface (CLI) — just as it would be in a real-world security incident.
 
-### Exploring the Home Directory
-- `ls` – List visible files and directories
-- `ls -la` – List all files including hidden ones
-- `cd Guides` – Move into the Guides directory
-- `cat .guide.txt` – Read the hidden security guide
+##Investigation Approach
 
-### Investigating Logs
-- `cd /var/log` – Navigate to system logs
-- `grep "Failed password" auth.log` – Search for failed login attempts
+The investigation followed a logical incident-response flow:
 
-### Finding Suspicious Files
-- `find /home/socmas -name *egg*` – the key was the keyword "find" which is a command that searches for files with specific parameters
+- Explore the system using Linux CLI commands
 
-### Analyzing Scripts
-- `cat eggstrike.sh` – Examine the malicious script
-- Observed usage of pipes (`|`), output redirection (`>`), and conditional execution (`&&`)
-[**Pipe (`|`)**  Sends the output of one command as input to another.  
-  *Example:* `cat unordered-list.txt | sort | uniq`
-- **Output Redirection (`>` / `>>`)**  
-  - `>` overwrites the contents of a file  
-  - `>>` appends output to the end of a file  
-  *Example:* `some-long-command > /home/mcskidy/output.txt`
+- Identify hidden files and suspicious artifacts
 
-- **Double Ampersand (`&&`)** Executes the second command only if the first command succeeds.  
-  *Example:* `grep "secret" message.txt && echo "Secret found!"`]
+Inspect logs for signs of brute-force activity
 
-### User Permissions
-- `whoami` – to Check current user
-- `sudo su` – to Switch to root for elevated privileges
-- `cat /etc/shadow` – (Requires root) Access user password hashes
-- `history` – Review command history for traces of malicious activity
+- Locate and analyze malicious scripts
 
-## Key Learnings
-- Hidden files and log files are valuable sources of information.
-- Pipes, redirection, and scripting allow automation and manipulation of data.
-- Root access is powerful but requires careful handling.
-- Bash history can reveal evidence of past system activity.
+- Check command history for attacker traces
+
+##Initial System Reconnaissance
+
+I began by exploring McSkidy’s home directory and reviewing files she left behind. A message in README.txt hinted that:
+
+- The system had been attacked
+
+- A security guide had been hidden intentionally
+
+- Logs would be crucial to the investigation
+
+This immediately directed the investigation toward hidden files and system logs.
+
+##Hidden Files & Directory Analysis
+
+Upon navigating to the Guides directory, no files appeared at first glance. However, using advanced listing options revealed a hidden security guide, confirming McSkidy had intentionally concealed it from attackers.
+
+The guide pointed to /var/log/ and specifically encouraged filtering logs rather than manually reading them — a realistic SOC analyst technique.
+
+##Log Analysis (Authentication Logs)
+
+By inspecting authentication logs, I discovered multiple failed login attempts targeting the socmas account, all originating from HopSec infrastructure. This indicated an active brute-force or credential-stuffing attempt.
+
+This confirmed that the attackers were already interacting with the system before McSkidy disappeared.
+
+##Malware Discovery & Analysis
+
+Using file discovery techniques, I identified a suspicious shell script named eggstrike.sh in the socmas user directory.
+
+Upon reviewing its contents, the script was clearly malicious:
+
+- It extracted and exfiltrated wishlist data
+
+- Deleted legitimate Christmas wishlists
+
+- Replaced them with EASTMAS-themed content
+
+This demonstrated direct manipulation of business-critical data, aligning with King Malhare’s campaign.
+
+##Privilege Escalation & Attacker Traces
+
+To deepen the investigation, I escalated privileges to the root user and inspected Bash history files. The attacker’s command history revealed outbound curl requests, confirming data exfiltration to HopSec-controlled servers.
+
+This was the strongest evidence that the system had been actively compromised.
+
+##Useful Commands Used in This Challenge
+
+
+
+##Skills & Concepts Learned
+
+- Linux command-line navigation
+- Hidden file discovery
+- Log analysis using grep
+- Malware script inspection
+- Privilege escalation awareness
+- Bash history forensics
+- Realistic Linux incident investigation
+
+##Key Takeaway
+This challenge demonstrated that Linux CLI proficiency is essential in cybersecurity.
+Without any graphical tools, it was still possible to:
+
+Identify attacker activity
+
+Trace malicious scripts
+
+Confirm data exfiltration
+
+Reconstruct the attack timeline
