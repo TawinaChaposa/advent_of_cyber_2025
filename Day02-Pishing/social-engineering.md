@@ -40,7 +40,7 @@ The email was crafted to impersonate a trusted shipping company, increasing the 
 
 ##Useful Commands & Actions Used
 
-<img width="607" height="397" alt="image" src="https://github.com/user-attachments/assets/373c2cbd-3134-4885-8e73-f402f4e22127" />
+<img width="610" height="399" alt="image" src="https://github.com/user-attachments/assets/245d64b2-ede3-4a86-ada0-a9b73671a1c7" />
 
 ##Outcome
 
