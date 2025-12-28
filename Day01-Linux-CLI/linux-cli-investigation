@@ -1,4 +1,5 @@
 #Day 1: Linux CLI Investigation – Uncovering the First Clues
+
 ##Scenario Overview
 
 The unthinkable has happened — McSkidy has been kidnapped. Without her leadership, Wareville’s cyber defenses are weakening, and Christmas itself is under threat.
@@ -12,13 +13,9 @@ With no graphical interface available, the investigation had to be carried out e
 The investigation followed a logical incident-response flow:
 
 - Explore the system using Linux CLI commands
-
 - Identify hidden files and suspicious artifacts
-
-Inspect logs for signs of brute-force activity
-
+- Inspect logs for signs of brute-force activity
 - Locate and analyze malicious scripts
-
 - Check command history for attacker traces
 
 ##Initial System Reconnaissance
@@ -26,9 +23,7 @@ Inspect logs for signs of brute-force activity
 I began by exploring McSkidy’s home directory and reviewing files she left behind. A message in README.txt hinted that:
 
 - The system had been attacked
-
 - A security guide had been hidden intentionally
-
 - Logs would be crucial to the investigation
 
 This immediately directed the investigation toward hidden files and system logs.
@@ -52,11 +47,8 @@ Using file discovery techniques, I identified a suspicious shell script named eg
 Upon reviewing its contents, the script was clearly malicious:
 
 - It extracted and exfiltrated wishlist data
-
 - Deleted legitimate Christmas wishlists
-
 - Replaced them with EASTMAS-themed content
-
 This demonstrated direct manipulation of business-critical data, aligning with King Malhare’s campaign.
 
 ##Privilege Escalation & Attacker Traces
@@ -66,7 +58,6 @@ To deepen the investigation, I escalated privileges to the root user and inspect
 This was the strongest evidence that the system had been actively compromised.
 
 ##Useful Commands Used in This Challenge
-
 
 
 ##Skills & Concepts Learned
