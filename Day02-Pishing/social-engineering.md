@@ -1,58 +1,51 @@
-# Day 02 – Phishing & Social Engineering
+#Day 2: Phishing Campaign & Social Engineering (Red Team Exercise)
 
-This challenge focused on social engineering and phishing techniques from a red team perspective.  
-The objective was to design, deliver, and observe a phishing campaign to test employee awareness at The Best Festival Company (TBFC).
+##Scenario Overview
+In response to several recent cybersecurity threats against The Best Festival Company (TBFC), the local red team scheduled an authorised penetration test to evaluate employee awareness and resilience against phishing attacks.
+ ##My Role
+As part of this exercise, I joined the TBFC red team alongside Recon McRed, Exploit McRed, and Pivot McRed. Our mission was to plan and execute a controlled phishing campaign to assess whether prior cybersecurity awareness training had been effective.
 
-## Learning Objectives
-- Understand social engineering concepts
-- Learn different types of phishing attacks
-- Build and host a fake login page
-- Use the Social-Engineer Toolkit (SET) to send phishing emails
-- Capture and analyze harvested credentials
+This simulation focused on human vulnerabilities, recognising that even well-secured systems can be compromised if users are manipulated.
 
-## Key Concepts
-
-### Social Engineering
-Social engineering involves manipulating people into performing actions that compromise security, such as:
-- Sharing passwords
+##Understanding the Threat: Social Engineering & Phishing
+Social engineering is the practice of manipulating people into making security mistakes such as:
 - Clicking malicious links
-- Opening harmful attachments
-
-Attackers rely on psychological triggers like **urgency**, **authority**, and **curiosity**, which is why social engineering is often called *human hacking*.
-
-### Phishing
-Phishing is a form of social engineering delivered through messages such as:
-- Email (phishing)
+- Entering credentials into fake portals
+- Trusting messages that appear urgent or authoritative
+Phishing is a subset of social engineering that uses communication channels such as:
+- Email
 - SMS (smishing)
 - Voice calls (vishing)
 - QR codes (quishing)
 
-The goal is to trick users into clicking links or entering credentials.
+In this challenge, the objective was to harvest login credentials by convincing a target user to enter them into a fake TBFC portal login page.
 
-## Practical Exercise
+#Attack Setup & Execution
+##Building the Phishing Trap
+To capture credentials, a fake TBFC login page was hosted using a provided Python script.
+This page mimicked a legitimate portal and logged any credentials entered by the victim.
+The phishing server was launched on the AttackBox and verified locally to ensure it appeared convincing to the target user.
 
-### Hosting a Fake Login Page
-A phishing server was launched using a provided Python script:
+##Delivering the Phishing Email (SET Toolkit)
+To avoid suspicion, the phishing email was sent using the Social-Engineer Toolkit (SET), an open-source framework designed for social engineering campaigns.
+The email was crafted to impersonate a trusted shipping company, increasing the likelihood of user interaction. The message included a link to the fake login page hosted earlier.
 
-cd ~/Rooms/AoC2025/Day02
-./server.py
-The fake login page listened on port 8000 and captured credentials entered by victims.
+##Useful Commands & Actions Used
+<img width="607" height="397" alt="image" src="https://github.com/user-attachments/assets/373c2cbd-3134-4885-8e73-f402f4e22127" />
 
-##Sending a Phishing Email with SET
+##Outcome
+- Successfully harvested valid TBFC credentials
+- Confirmed password reuse across internal services
+- Demonstrated that employees remain vulnerable to phishing attacks
+The results indicated that an attacker could gain unauthorized access to critical systems, posing a serious operational risk to TBFC.
 
-The Social-Engineer Toolkit (SET) was used to deliver the phishing email.The SET is an open-source tool primarily designed by David Kennedy for social engineering attacks which lets you compose and send a phishing email. Find out more about the social engineering : https://github.com/trustedsec/social-engineer-toolkit
+##Skills & Concepts Learned
+- Social engineering fundamentals
+- Phishing campaign planning
+- Credential harvesting techniques
+- Using the Social-Engineer Toolkit (SET)
+- Red team attack workflows
+- Human-focused attack vectors
 
-##Key steps:
-1. Launch SET: setoolkit
-2. Select:
-- Social-Engineering Attacks
-- Mass Mailer Attack
-- Single Email Address
-- Configure sender details and SMTP server
-- Craft a convincing phishing email containing the fake login URL
-
-##Key Takeaways
-- Humans are often the weakest link in security
-- Realistic phishing emails are highly effective
-- Credential reuse significantly increases impact
-- Social engineering attacks can lead to full system compromise
+##Key Takeaway
+This challenge highlighted that cybersecurity is not only a technical problem. Even with security controls in place, human error can lead to full system compromise if awareness and vigilance are lacking.
