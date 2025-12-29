@@ -2,7 +2,7 @@
 
 ### Scenario Overview
 
-With McSkidy still missing, TBFC is vulnerable. The Email Protection Platform — the SOC’s first line of defence — is completely offline.
+With McSkidy still missing, TBFC is vulnerable. The Email Protection Platform, the SOC’s first line of defence is completely offline.
 That means no automated filtering, no quarantine, no safety net.
 
 Every email reaching TBFC staff now has to be reviewed manually.
