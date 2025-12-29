@@ -1,4 +1,4 @@
-## Day X – Cross-Site Scripting (XSS) Investigation
+## Day 11 – Cross-Site Scripting (XSS) Investigation
 
 ### Scenario Overview
 
