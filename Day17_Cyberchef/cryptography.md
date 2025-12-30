@@ -76,17 +76,17 @@ This room highlights how attackers — and defenders — can exploit **exposed a
 
 ### Encoding Concepts Used 
 
-* Base64 Encoding
-Base64 is an encoding method used to convert binary or text data into ASCII characters for safe transmission over systems that may not handle raw data well. It is commonly abused by attackers to hide commands in web traffic or scripts, but it offers no security since it can be easily decoded.
+* ### Base64 Encoding
+Is an encoding method used to convert binary or text data into ASCII characters for safe transmission over systems that may not handle raw data well. It is commonly abused by attackers to hide commands in web traffic or scripts, but it offers no security since it can be easily decoded.
 
-* XOR Encoding
-XOR is a reversible encoding technique that combines data with a key using a bitwise operation. Its key property is that applying the same XOR operation twice with the same key restores the original data, making it common in malware obfuscation rather than encryption.
+* ### XOR Encoding
+Is a reversible encoding technique that combines data with a key using a bitwise operation. Its key property is that applying the same XOR operation twice with the same key restores the original data, making it common in malware obfuscation rather than encryption.
 
-* ROT13 / ROT47
+* ### ROT13 / ROT47
 ROT-based encodings shift characters by a fixed number of positions. They are simple obfuscation techniques often used to hide readable strings from quick inspection, but they provide no real security.
 
-* MD5 Hashing
-MD5 is a cryptographic hash function that converts input data into a fixed-length hash. While it is designed to be one-way, weak or common inputs can often be recovered using hash databases, making MD5 unsuitable for secure authentication.
+* ### MD5 Hashing
+Is a cryptographic hash function that converts input data into a fixed-length hash. While it is designed to be one-way, weak or common inputs can often be recovered using hash databases, making MD5 unsuitable for secure authentication.
 
-* Chained Encoding
-Chained encoding involves applying multiple encoding or transformation steps in sequence. Attackers use this to increase analysis difficulty, but understanding the order of operations allows analysts to systematically reverse the process.
+* ### Chained Encoding
+Involves applying multiple encoding or transformation steps in sequence. Attackers use this to increase analysis difficulty, but understanding the order of operations allows analysts to systematically reverse the process.
