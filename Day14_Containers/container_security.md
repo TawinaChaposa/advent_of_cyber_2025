@@ -1,59 +1,67 @@
-# Day 15 – Web Exploitation Investigation Using Splunk
+## Day 14 – Container Security
 
-## Scenario Overview
+### Scenario Overview
 
-TBFC’s drone scheduler web application began receiving unusually long HTTP requests containing Base64-encoded data. Splunk raised an alert indicating that **Apache had spawned an abnormal process**, suggesting possible command execution via the web layer.
+Wareville woke up to another incident when DoorDasher, the city’s popular food delivery platform, was defaced and rebranded as **Hopperoo** by King Malhare and his bandit bunnies. Reports flooded in from customers and regulators after contaminated meals were allegedly delivered, causing widespread panic.
 
-As a Blue Team analyst, the goal was to investigate the suspicious web activity, determine whether command injection occurred, identify compromised hosts, and reconstruct the attacker’s actions using Splunk.
+A security engineer prepared a recovery script to restore the service, but before it could be executed, the attacker locked them out of the system. With traditional access blocked, the SOC team identified one remaining entry point: a **monitoring container (uptime-checker)** still running on the host.
 
-## My Role
+### My Role
 
-I acted as a **SOC Analyst**, responsible for:
+I acted as a **SOC / Blue Team Analyst**, tasked with investigating the containerized environment, identifying security misconfigurations, escaping a vulnerable container, escalating privileges, and restoring the DoorDasher service.
 
-* Triage of suspicious Splunk alerts
-* Investigating Apache web logs
-* Pivoting into host-level telemetry
-* Decoding attacker payloads
-* Determining the scope of compromise
+### Tools Used
 
-## Tools Used
+* Docker
+* Linux command line
+* Docker CLI
+* Container runtime (Docker Engine)
+* Web browser (service validation)
 
-* Splunk SIEM
-* Apache access logs
-* Apache error logs
-* Sysmon (Windows process telemetry)
-* Base64 decoder
+### Investigation Approach
 
-## Investigation Approach
+I began by enumerating all running Docker containers to understand the environment and identify potential access points. After locating the **uptime-checker** container, I accessed it interactively and inspected its filesystem and permissions.
 
-I started by reviewing **Apache access logs** to identify suspicious HTTP requests indicative of command injection. After identifying encoded payloads, I decoded them to understand attacker intent.
+During analysis, I discovered that the container had access to the **Docker socket (`/var/run/docker.sock`)**, a critical misconfiguration that allowed direct interaction with the Docker daemon. This effectively granted control over the host’s containers.
 
-Next, I examined **Apache error logs** to confirm whether the malicious requests were processed by the backend. I then pivoted into **Sysmon logs** to verify whether Apache successfully spawned operating system commands.
+Using this access, I pivoted from the monitoring container into a **privileged deployer container**, where the recovery script was stored. From there, I escalated privileges and executed the script to restore the original DoorDasher service.
 
-Finally, I searched for encoded PowerShell execution attempts to assess whether additional payloads had successfully run.
+### Key Findings
 
-## Key Splunk Queries Used
-<img width="604" height="323" alt="image" src="https://github.com/user-attachments/assets/01e51c11-b0f4-4fae-997f-0fbfccc71b96" />
+* A monitoring container had unrestricted access to the Docker socket.
+* Docker socket exposure allowed full interaction with the Docker daemon.
+* Container isolation was broken, enabling **container escape**.
+* A privileged container contained a recovery script capable of restoring the service.
+* The attacker relied on container misconfiguration rather than a kernel exploit.
 
-## Key Findings
+### Outcome
 
-* Malicious HTTP requests contained Base64-encoded PowerShell commands.
-* Apache error logs showed backend processing of injected commands.
-* Apache (`httpd.exe`) spawned system-level processes.
-* The attacker executed `whoami` to identify the running user.
-* No evidence of successful execution of additional encoded PowerShell payloads.
+By exploiting the exposed Docker socket and escalating privileges:
 
-## Outcome
+* I successfully escaped the compromised container
+* Accessed a privileged container
+* Executed the recovery script
+* Restored DoorDasher to its original state
 
-The investigation confirmed a **command injection attack via the web server**, progressing from malicious HTTP requests to operating system command execution. By correlating web and host-level logs in Splunk, the full attack chain was reconstructed and the impact accurately scoped.
+This investigation demonstrated how a **single container misconfiguration** can lead to full host compromise.
 
-## Skills & Concepts Learned
+### Useful Commands Used in This Challenge
 
-* Detecting command injection via web logs
-* Pivoting between Apache and Sysmon data in Splunk
-* Identifying post-exploitation reconnaissance activity
-* Decoding obfuscated attacker payloads
-* Reconstructing attack chains using SIEM
+| Purpose                                    | Command                             |
+| ------------------------------------------ | ----------------------------------- |
+| List running containers                    | `docker ps`                         |
+| Enter a running container                  | `docker exec -it uptime-checker sh` |
+| Check Docker socket access                 | `ls -la /var/run/docker.sock`       |
+| Interact with Docker from inside container | `docker ps`                         |
+| Access privileged container                | `docker exec -it deployer bash`     |
+| Confirm current user                       | `whoami`                            |
+| Restore service                            | `sudo /recovery_script.sh`          |
 
+### Skills & Concepts Learned
 
-
+* Container vs virtual machine architecture
+* Docker images, containers, and runtime behavior
+* Docker socket security risks
+* Container escape techniques
+* Privilege escalation via container misconfiguration
+* Real-world impact of insecure container deployments
