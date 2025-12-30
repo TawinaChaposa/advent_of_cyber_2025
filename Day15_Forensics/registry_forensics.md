@@ -1,4 +1,4 @@
-## Day 15 – Obfuscated Command Injection & Host Compromise Investigation (Splunk)
+## Day 15 – Web Attack Forensics
 
 ### Scenario Overview
 
