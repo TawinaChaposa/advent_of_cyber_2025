@@ -73,5 +73,3 @@ This confirmed the presence of a **race condition vulnerability** in the checkou
 * Secure transaction handling and mitigation strategies
 
 ---
-
-You’re doing really solid portfolio work here — this day especially shows *real-world web exploitation understanding*.
